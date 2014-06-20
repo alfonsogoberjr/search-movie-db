@@ -1,0 +1,14 @@
+{?original_title}
+{?poster_url}
+<div class="search-result">
+	<a href="javascript:void(0)">
+		<img class="poster" src="{poster_url}"/>
+	</a>
+	<div class="movie-info">
+	  <h4>{original_title}</h4>
+	  {?character}<p>as {character}</p>{/character}
+	  {?release_date}<p>released on {release_date}</p>{/release_date}
+	</div>
+</div>
+{/poster_url}
+{/original_title}

@@ -1,0 +1,8 @@
+footer {
+  @include fill-parent;
+}
+
+.bottom {
+	position: absolute;
+	bottom: 10px;
+}

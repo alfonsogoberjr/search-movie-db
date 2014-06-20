@@ -1,0 +1,46 @@
+{
+  "name": "search-movie-db",
+  "version": "0.0.1",
+  "description": "The Movie DB Search App",
+  "main": "./server.coffee",
+  "author": "Alfonso Gober <alfonso.gober.jr@gmail.com>",
+  "private": true,
+  "license": "ISC",
+  "scripts": {
+    "start": "coffee server.coffee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alfonsogoberjr/search-movie-db.git"
+  },
+  "dependencies": {
+    "async": "^0.9.0",
+    "coffee-script": "^1.7.1",
+    "colors": "^0.6.2",
+    "consolidate": "^0.10.0",
+    "dustjs-linkedin": "^2.3.5",
+    "express": "^4.3.0",
+    "moment": "^2.6.0",
+    "node-bourbon": "^1.2.3",
+    "node-neat": "^1.3.0",
+    "serve-favicon": "2.0.0",
+    "watch": "^0.10.0",
+    "mocha": "^1.20.0",
+    "zombie": "^2.0.0-alpha31",
+    "assert": "^1.1.1",
+    "chai": "^1.9.1"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-concurrent": "^0.5.0",
+    "grunt-contrib-coffee": "^0.10.1",
+    "grunt-contrib-cssmin": "^0.9.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-sass": "^0.12.1",
+    "grunt-nodemon": "^0.2.1",
+    "grunt-dust": "^0.9.1",
+    "grunt-mocha-test": "^0.11.0"
+  }
+}

@@ -1,0 +1,14 @@
+<div class="index">
+<h1>Search The Movie Database</h1>
+<h3>An example app by <a href="mailto:alfonso.gober.jr@gmail.com">Alfonso Gober</a></h3>
+
+<div class="ui input">
+	<i class="icon-search"></i>
+	<input id="search" type="search" placeholder="Search by Actor or Actress">
+	<button class="round-btn" type="submit" id="submit">Search</button>
+</div>
+</div>
+<div class="person-result"></div>
+<div class="search-results"></div>
+<span class="bottom">Powered by <a href="http://themoviedb.org">The Movie DB</a></span>
+

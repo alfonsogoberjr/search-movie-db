@@ -1,0 +1,5 @@
+{>"layout"/}
+{<content}
+	<div class="container {@eq key=page value="person"}person-container{/eq}{@eq key=page value="movie"}movie-container{/eq}" data-page="{page}" {?id} data-id="{id}" {/id}>
+	</div>
+{/content}

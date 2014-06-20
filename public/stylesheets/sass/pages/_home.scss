@@ -1,0 +1,58 @@
+.container {
+  height: 100%;
+  background: #E6A280;
+  padding: 15px;
+  border-left: 25px solid #BF795C;
+  border-right: 25px solid #BF795C;
+}
+
+.index {
+  margin: 15px;
+}
+
+.person-result {
+  margin: 15px;
+  max-height: 32em;
+  max-width: 32em;
+  overflow: hidden;
+  .portrait {
+    border-radius: 7px;
+    margin: 15px;
+    border: 1px solid #BF795C;
+    float: left;
+    }
+  .person-info {
+    height: 20em;
+    overflow: hidden;
+    margin: 15px;
+    max-width: 53%;
+  }
+}
+
+.search-results {
+  width: 45%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  overflow-y: scroll;
+  max-height: 100%;
+  margin-left: 10px;
+  .search-result {
+    background: #F5D5AF;
+    border-radius: 15px;
+    border: 1px solid #BF795C;
+    height: 255px;
+    margin: 10px;
+    .movie-info {
+      float: left;
+      width: 40%;
+      margin: 15px;
+      max-height: 225px;
+      overflow: hidden;
+    }
+    .poster {
+      border-radius: 7px;
+      margin: 15px;
+    }
+  }
+}
