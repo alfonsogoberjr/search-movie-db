@@ -18,11 +18,12 @@ class App.View.Home extends App.View
   	query = $('input[type=search]').val()
   	if query
       console.log "Search for #{query}"
-      if query isnt App.current_query
+      previousTerm = App.search_history[(App.search_history.length-1)] unless not App.search_history.length
+      if query isnt previousTerm
         $('.search-results').empty()
         $('.person-result').empty()
         @model.fetch({data: $.param({query: query, api_key: App.api.key})})
-        App.current_query = query
+        App.search_history.push(query)
       else
         return
   	else
@@ -54,7 +55,6 @@ class App.View.Home extends App.View
               self.render {data: role, template: "search_result", method: "append", element: $('.search-results')}
 
           else toastr.error "No roles were found for #{person.name}"
-          console.log $('.search-result')
 
   	else toastr.error "No person found. Try a different search term."
 

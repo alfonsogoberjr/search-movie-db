@@ -9,7 +9,7 @@
       baseUrl: 'https://api.themoviedb.org/3',
       key: 'f655c8635868fc68fe7ecf4d88e409f2'
     },
-    current_query: "",
+    search_history: [],
     init: function() {
       switch ($('[data-page]').data('page')) {
         case "home":
@@ -223,11 +223,14 @@
     };
 
     Home.prototype.search = function() {
-      var query;
+      var previousTerm, query;
       query = $('input[type=search]').val();
       if (query) {
         console.log("Search for " + query);
-        if (query !== App.current_query) {
+        if (!!App.search_history.length) {
+          previousTerm = App.search_history[App.search_history.length - 1];
+        }
+        if (query !== previousTerm) {
           $('.search-results').empty();
           $('.person-result').empty();
           this.model.fetch({
@@ -236,7 +239,7 @@
               api_key: App.api.key
             })
           });
-          return App.current_query = query;
+          return App.search_history.push(query);
         } else {
 
         }
@@ -263,13 +266,14 @@
             return $('body').append("AJAX Error: " + textStatus);
           },
           success: function(data, textStatus, jqXHR) {
-            var role, roles, self, _i, _len;
+            var role, roles, self, _i, _len, _results;
             if (data && data.cast) {
               roles = _.sortBy(data.cast, function(o) {
                 return o.release_date;
               });
               roles.reverse();
               self = this;
+              _results = [];
               for (_i = 0, _len = roles.length; _i < _len; _i++) {
                 role = roles[_i];
                 if (role.release_date) {
@@ -278,17 +282,17 @@
                 if (role.poster_path) {
                   role.poster_url = "" + App.api.images.base_url + App.api.images.poster_sizes[1] + role.poster_path;
                 }
-                self.render({
+                _results.push(self.render({
                   data: role,
                   template: "search_result",
                   method: "append",
                   element: $('.search-results')
-                });
+                }));
               }
+              return _results;
             } else {
-              toastr.error("No roles were found for " + person.name);
+              return toastr.error("No roles were found for " + person.name);
             }
-            return console.log($('.search-result'));
           }
         });
       } else {

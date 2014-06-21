@@ -5,7 +5,7 @@ window.App =
     baseUrl: 'https://api.themoviedb.org/3'
     key: 'f655c8635868fc68fe7ecf4d88e409f2'
   }
-  current_query: ""
+  search_history: []
 
   init: ->
     switch $('[data-page]').data('page')
