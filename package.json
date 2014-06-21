@@ -9,6 +9,9 @@
   "scripts": {
     "start": "coffee server.coffee"
   },
+  "engines": {
+    "node": "0.10.26"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/alfonsogoberjr/search-movie-db.git"
