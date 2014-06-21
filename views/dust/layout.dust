@@ -11,6 +11,6 @@
     		{+content/}
       </main>
     {>"shared_footer"/}
-    <script type="text/javascript" src="/js/app.min.js"></script>
+    <script async type="text/javascript" src="/js/app.min.js"></script>
   </body>
 </html>

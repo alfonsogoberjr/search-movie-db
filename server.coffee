@@ -12,6 +12,7 @@ cons 				= require("consolidate")
 moment 			= require('moment')
 colors 			= require('colors')
 favicon     = require('serve-favicon')
+compression	= require('compression')
 
 #	Set the app
 app	= express()
@@ -28,6 +29,7 @@ app.set "view engine", "dust"
 #	Configure client-side
 app.use express.static "#{__dirname}/public"
 app.use '/', require('./routes')(app)
+app.use compression()
 
 #	Configure favicon
 #app.use favicon("#{__dirname}/public/favicon.png")

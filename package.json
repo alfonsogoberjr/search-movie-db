@@ -31,7 +31,8 @@
     "mocha": "^1.20.0",
     "zombie": "^2.0.0-alpha31",
     "assert": "^1.1.1",
-    "chai": "^1.9.1"
+    "chai": "^1.9.1",
+    "compression": "^1.0.8"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
