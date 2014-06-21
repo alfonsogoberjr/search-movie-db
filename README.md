@@ -4,7 +4,7 @@ An api-driven Backbone app in Node.js
 
 ## About
 
-As part of a challenge, I was to write a web application that will allow you to search for an actor’s name (ex. Bill Murray) and list the movies Bill Murray has acted in chronological order. You should be able to search for any actor’s movies. Below are a few requirements for this project.
+As part of a challenge, I was to write a web application that will allow you to search for an actor’s name (ex. Bill Murray) and list the movies Bill Murray has acted in chronological order. You should be able to search for any actor and see a list of their movies. Below are a few requirements for this project.
 
 * Use [The Movie DB](http://www.themoviedb.org/) APIs
 * Deploy working code to a free service such as Heroku (https://heroku.com/)
