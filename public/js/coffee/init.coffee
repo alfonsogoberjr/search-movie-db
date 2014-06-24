@@ -54,9 +54,16 @@ class App.View extends Backbone.View
 
     dust.render options.template, options.data, (err, out) =>
       $(options.element)[options.method](out) unless err
+      @check_height()
 
   render_title: ->
     @render {data: @model.get('data'), template: "title", element: $('title')}
+
+  check_height: ->
+    if $('.search-results').height() >= $('body').height()
+      $('main').removeClass('full-height')
+    else
+      $('main').addClass('full-height')
 
 $ ->
   App.init()

@@ -28,14 +28,14 @@ and (max-device-width : 480px) {
 	  max-height: 32em;
 	  width: 90%;
 	  .portrait {
-	  	width: 90%;
+	  	height: 90%;
 	    border-radius: 7px;
 	    margin: auto;
 	    border: 1px solid #BF795C;
 	    }
 	  .person-info {
 	    margin: 0;
-	    width: 120%;
+	    height: 90%;
 	  }
 	}
 
@@ -54,7 +54,7 @@ and (max-device-width : 480px) {
 	    }
 	    .poster {
 	      border-radius: 7px;
-	      width: 82%;
+	      height: 80%;
 	    }
 	  }
 	}

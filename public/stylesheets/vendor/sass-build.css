@@ -416,8 +416,7 @@ p {
 main {
   max-width: 68em;
   margin-left: auto;
-  margin-right: auto;
-  height: 100%; }
+  margin-right: auto; }
   main:after {
     content: "";
     display: table;
@@ -510,34 +509,34 @@ footer {
 .index {
   margin: 15px; }
 
-.person-result {
+.person-result, .movie-result {
   margin: 15px;
   max-height: 32em;
-  max-width: 32em;
+  max-width: 100%;
   overflow: hidden; }
-  .person-result .portrait {
+  .person-result .portrait, .movie-result .portrait {
     border-radius: 7px;
     margin: 15px;
     border: 1px solid #BF795C;
     float: left; }
-  .person-result .person-info {
+  .person-result .person-info, .movie-result .person-info {
     height: 20em;
     overflow: hidden;
     margin: 15px;
     max-width: 53%; }
 
 .search-results {
-  width: 45%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  overflow-y: scroll;
-  max-height: 100%;
+  width: 100%;
+  position: relative;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width: 100%;
   margin-left: 10px; }
   .search-results .search-result {
     background: #F5D5AF;
     border-radius: 15px;
     border: 1px solid #BF795C;
+    width: 50%;
     height: 255px;
     margin: 10px; }
     .search-results .search-result .movie-info {
@@ -547,8 +546,12 @@ footer {
       max-height: 225px;
       overflow: hidden; }
     .search-results .search-result .poster {
+      max-height: 255px;
       border-radius: 7px;
       margin: 15px; }
+
+.full-height {
+  height: 100%; }
 
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
@@ -573,13 +576,13 @@ footer {
     max-height: 32em;
     width: 90%; }
     .person-result .portrait {
-      width: 90%;
+      height: 90%;
       border-radius: 7px;
       margin: auto;
       border: 1px solid #BF795C; }
     .person-result .person-info {
       margin: 0;
-      width: 120%; }
+      height: 90%; }
   .search-results {
     width: 90%;
     float: none;
@@ -594,7 +597,7 @@ footer {
         display: none; }
       .search-results .search-result .poster {
         border-radius: 7px;
-        width: 82%; }
+        height: 80%; }
   .bottom {
     position: relative;
     bottom: 0; } }

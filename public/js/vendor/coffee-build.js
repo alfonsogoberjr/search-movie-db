@@ -111,8 +111,9 @@
       return dust.render(options.template, options.data, (function(_this) {
         return function(err, out) {
           if (!err) {
-            return $(options.element)[options.method](out);
+            $(options.element)[options.method](out);
           }
+          return _this.check_height();
         };
       })(this));
     };
@@ -123,6 +124,14 @@
         template: "title",
         element: $('title')
       });
+    };
+
+    View.prototype.check_height = function() {
+      if ($('.search-results').height() >= $('body').height()) {
+        return $('main').removeClass('full-height');
+      } else {
+        return $('main').addClass('full-height');
+      }
     };
 
     return View;
@@ -187,7 +196,7 @@
       return Search.__super__.constructor.apply(this, arguments);
     }
 
-    Search.prototype.urlRoot = App.api.baseUrl + '/search/person';
+    Search.prototype.urlRoot = App.api.baseUrl + '/search/multi';
 
     return Search;
 
@@ -233,6 +242,7 @@
         if (query !== previousTerm) {
           $('.search-results').empty();
           $('.person-result').empty();
+          $('.movie-result').empty();
           this.model.fetch({
             data: $.param({
               query: query,
@@ -249,54 +259,20 @@
     };
 
     Home.prototype.parse_search_results = function() {
-      var person;
+      var result;
       if (this.model.get('results').length) {
-        person = this.model.get('results')[0];
-        $('.person-result').data({
-          'profile-path': person.profile_path,
-          'id': person.id
-        });
-        this.person = new App.View.People({
-          el: $('.person-result')
-        });
-        return $.ajax("" + App.api.baseUrl + "/person/" + person.id + "/combined_credits?api_key=" + App.api.key, {
-          type: 'GET',
-          context: this,
-          error: function(jqXHR, textStatus, errorThrown) {
-            return $('body').append("AJAX Error: " + textStatus);
-          },
-          success: function(data, textStatus, jqXHR) {
-            var role, roles, self, _i, _len, _results;
-            if (data && data.cast) {
-              roles = _.sortBy(data.cast, function(o) {
-                return o.release_date;
-              });
-              roles.reverse();
-              self = this;
-              _results = [];
-              for (_i = 0, _len = roles.length; _i < _len; _i++) {
-                role = roles[_i];
-                if (role.release_date) {
-                  role.release_date = self.parse_date(role.release_date);
-                }
-                if (role.poster_path) {
-                  role.poster_url = "" + App.api.images.base_url + App.api.images.poster_sizes[1] + role.poster_path;
-                }
-                _results.push(self.render({
-                  data: role,
-                  template: "search_result",
-                  method: "append",
-                  element: $('.search-results')
-                }));
-              }
-              return _results;
-            } else {
-              return toastr.error("No roles were found for " + person.name);
-            }
-          }
-        });
+        result = this.model.get('results')[0];
+        if (result.name) {
+          this.search_person(result);
+        }
+        if (result.title) {
+          this.search_movie(result);
+        }
+        if (!result.name && !result.title) {
+          return toastr.error("No results found. Try a different search term.");
+        }
       } else {
-        return toastr.error("No person found. Try a different search term.");
+        return toastr.error("No results found. Try a different search term.");
       }
     };
 
@@ -310,6 +286,62 @@
       var date;
       date = new Date(str);
       return "" + (date.getMonth()) + "/" + (date.getDate()) + "/" + (date.getFullYear());
+    };
+
+    Home.prototype.search_person = function(person) {
+      $('.person-result').data({
+        'profile-path': person.profile_path,
+        'id': person.id
+      });
+      this.person = new App.View.People({
+        el: $('.person-result')
+      });
+      return $.ajax("" + App.api.baseUrl + "/person/" + person.id + "/combined_credits?api_key=" + App.api.key, {
+        type: 'GET',
+        context: this,
+        error: function(jqXHR, textStatus, errorThrown) {
+          return $('body').append("AJAX Error: " + textStatus);
+        },
+        success: function(data, textStatus, jqXHR) {
+          var role, roles, self, _i, _len, _results;
+          if (data && data.cast) {
+            roles = _.sortBy(data.cast, function(o) {
+              return o.release_date;
+            });
+            roles.reverse();
+            self = this;
+            _results = [];
+            for (_i = 0, _len = roles.length; _i < _len; _i++) {
+              role = roles[_i];
+              if (role.release_date) {
+                role.release_date = self.parse_date(role.release_date);
+              }
+              if (role.poster_path) {
+                role.poster_url = "" + App.api.images.base_url + App.api.images.poster_sizes[1] + role.poster_path;
+              }
+              _results.push(self.render({
+                data: role,
+                template: "search_result",
+                method: "append",
+                element: $('.search-results')
+              }));
+            }
+            return _results;
+          } else {
+            return toastr.error("No roles were found for " + person.name);
+          }
+        }
+      });
+    };
+
+    Home.prototype.search_movie = function(movie) {
+      $('.movie-result').data({
+        'poster-path': movie.poster_path,
+        'id': movie.id
+      });
+      return this.movie = new App.View.Movies({
+        el: $('.movie-result')
+      });
     };
 
     return Home;
@@ -334,14 +366,23 @@
     Movies.prototype.model = new App.Model.Movie;
 
     Movies.prototype.initialize = function() {
-      this.listenTo(this.model, "change", this.render);
-      this.listenToOnce(this.model, "change", this.render_title);
-      return this.model.fetch({
-        data: $.param({
-          id: this.$el.data('id'),
-          api_key: App.api.key
-        })
+      if (this.$el.data('id') && this.$el.hasClass('movie-result')) {
+        this.template = "movie_result";
+        this.listenTo(this.model, "change", this.render_as_search_result);
+        return this.model.fetch({
+          url: "" + App.api.baseUrl + "/movie/" + (this.$el.data('id')),
+          data: $.param({
+            api_key: App.api.key
+          })
+        });
+      }
+    };
+
+    Movies.prototype.render_as_search_result = function() {
+      this.model.set({
+        "image_url": "" + App.api.images.base_url + App.api.images.poster_sizes[1] + (this.$el.data('poster-path'))
       });
+      return this.render();
     };
 
     return Movies;

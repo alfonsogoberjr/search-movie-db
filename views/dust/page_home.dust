@@ -9,6 +9,7 @@
 </div>
 </div>
 <div class="person-result"></div>
+<div class="movie-result"></div>
 <div class="search-results"></div>
 <span class="bottom">Powered by <a href="http://themoviedb.org">The Movie DB</a></span>
 

@@ -1,0 +1,5 @@
+	{?image_url}<img class="portrait" src="{image_url}"/>{/image_url}
+	<div class="person-info">
+	<h3>{title}</h3>
+	<p>{overview}</p>
+	</div>
